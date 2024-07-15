@@ -480,19 +480,6 @@ ttf-parser = { opt-level = 3 }
 wasmtime-cranelift = { opt-level = 3 }
 wasmtime = { opt-level = 3 }
 
-[profile.release]
-debug = "limited"
-lto = "thin"
-codegen-units = 1
-
-[profile.release.package]
-zed = { codegen-units = 16 }
-
-[profile.release-fast]
-inherits = "release"
-lto = false
-codegen-units = 16
-
 [workspace.lints.clippy]
 dbg_macro = "deny"
 todo = "deny"
