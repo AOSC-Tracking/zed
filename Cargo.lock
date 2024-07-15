@@ -7,7 +7,6 @@ name = "activity_indicator"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "auto_update",
  "editor",
  "extension",
  "futures 0.3.28",
@@ -964,32 +963,6 @@ dependencies = [
  "parking_lot",
  "rodio",
  "util",
-]
-
-[[package]]
-name = "auto_update"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "client",
- "db",
- "editor",
- "gpui",
- "http 0.1.0",
- "isahc",
- "log",
- "markdown_preview",
- "menu",
- "release_channel",
- "schemars",
- "serde",
- "serde_derive",
- "serde_json",
- "settings",
- "smol",
- "tempfile",
- "util",
- "workspace",
 ]
 
 [[package]]
@@ -11026,7 +10999,6 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 name = "title_bar"
 version = "0.1.0"
 dependencies = [
- "auto_update",
  "call",
  "client",
  "collections",
@@ -13569,7 +13541,6 @@ dependencies = [
  "assets",
  "assistant",
  "audio",
- "auto_update",
  "backtrace",
  "breadcrumbs",
  "call",

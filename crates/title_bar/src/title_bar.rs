@@ -4,7 +4,6 @@ mod platforms;
 mod window_controls;
 
 use crate::platforms::{platform_linux, platform_mac, platform_windows};
-use auto_update::AutoUpdateStatus;
 use call::{ActiveCall, ParticipantLocation};
 use client::{Client, UserStore};
 use collab::render_color_ribbon;
@@ -645,7 +644,6 @@ impl TitleBar {
                                 }),
                             )
                             .action("Give Feedback", Box::new(feedback::GiveFeedback))
-                            .action("Check for Updates", Box::new(auto_update::Check))
                             .action("View Telemetry", Box::new(zed_actions::OpenTelemetryLog))
                             .action(
                                 "View Dependency Licenses",
@@ -862,7 +860,7 @@ impl TitleBar {
     fn render_connection_status(
         &self,
         status: &client::Status,
-        cx: &mut ViewContext<Self>,
+        _cx: &mut ViewContext<Self>,
     ) -> Option<AnyElement> {
         match status {
             client::Status::ConnectionError
@@ -876,33 +874,6 @@ impl TitleBar {
                     .tooltip(|cx| Tooltip::text("Disconnected", cx))
                     .into_any_element(),
             ),
-            client::Status::UpgradeRequired => {
-                let auto_updater = auto_update::AutoUpdater::get(cx);
-                let label = match auto_updater.map(|auto_update| auto_update.read(cx).status()) {
-                    Some(AutoUpdateStatus::Updated { .. }) => "Please restart Zed to Collaborate",
-                    Some(AutoUpdateStatus::Installing)
-                    | Some(AutoUpdateStatus::Downloading)
-                    | Some(AutoUpdateStatus::Checking) => "Updating...",
-                    Some(AutoUpdateStatus::Idle) | Some(AutoUpdateStatus::Errored) | None => {
-                        "Please update Zed to Collaborate"
-                    }
-                };
-
-                Some(
-                    Button::new("connection-status", label)
-                        .label_size(LabelSize::Small)
-                        .on_click(|_, cx| {
-                            if let Some(auto_updater) = auto_update::AutoUpdater::get(cx) {
-                                if auto_updater.read(cx).status().is_updated() {
-                                    workspace::reload(&Default::default(), cx);
-                                    return;
-                                }
-                            }
-                            auto_update::check(&Default::default(), cx);
-                        })
-                        .into_any_element(),
-                )
-            }
             _ => None,
         }
     }
