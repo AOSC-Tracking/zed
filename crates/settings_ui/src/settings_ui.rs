@@ -5500,8 +5500,7 @@ pub mod test {
         navbar_basic_open,
         before: r"
         v General
-        - General
-        - Privacy*
+        - General*
         v Project
         - Project Settings
         ",
@@ -5518,7 +5517,6 @@ pub mod test {
         before: r"
         > General*
         - General
-        - Privacy
         v Project
         - Project Settings
         ",
@@ -5526,7 +5524,6 @@ pub mod test {
         after: r"
         v General*
         - General
-        - Privacy
         v Project
         - Project Settings
         "
@@ -5537,7 +5534,6 @@ pub mod test {
         before: r"
         > General
         - General
-        - Privacy
         v Project
         - Project Settings*
         ",
@@ -5553,7 +5549,6 @@ pub mod test {
         before: r"
         v General Page
         - General
-        - Privacy
         v Project
         - Worktree Settings Content*
         v AI
@@ -5564,7 +5559,6 @@ pub mod test {
         after: r"
         v General Page
         - General
-        - Privacy
         > Project*
         v AI
         - General
@@ -5577,7 +5571,6 @@ pub mod test {
         before: r"
         v General Page
         - General
-        - Privacy
         v Project
         - Worktree Settings Content
         v AI
@@ -5600,7 +5593,6 @@ pub mod test {
         before: r"
         > General Page
         - General
-        - Privacy
         v Project
         - Worktree Settings Content
         v AI
@@ -5611,7 +5603,6 @@ pub mod test {
         after: r"
         v General Page*
         - General
-        - Privacy
         v Project
         - Worktree Settings Content
         v AI
@@ -5628,7 +5619,6 @@ pub mod test {
                 r"
                 > General*
                 - General
-                - Privacy
                 v Project
                 - Project Settings
                 ",
@@ -5645,11 +5635,6 @@ pub mod test {
                 .iter()
                 .position(|entry| entry.title == "General" && entry.is_root)
                 .expect("General root entry should exist");
-            let privacy_idx = settings_window
-                .navbar_entries
-                .iter()
-                .position(|entry| entry.title == "Privacy" && !entry.is_root)
-                .expect("Privacy nested entry should exist");
 
             let click_event = |click_count| {
                 gpui::ClickEvent::Mouse(gpui::MouseClickEvent {
@@ -5695,13 +5680,6 @@ pub mod test {
                 "triple-clicks should not toggle the entry again"
             );
             assert!(settings_window.navbar_entries[general_idx].expanded);
-
-            assert!(!settings_window.toggle_navbar_entry_on_double_click(
-                privacy_idx,
-                &click_event(2),
-                window,
-                cx,
-            ));
         });
     }
 

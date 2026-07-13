@@ -853,19 +853,7 @@ impl VsCodeSettings {
     }
 
     fn telemetry_settings_content(&self) -> Option<TelemetrySettingsContent> {
-        self.read_enum("telemetry.telemetryLevel", |level| {
-            let (metrics, diagnostics) = match level {
-                "all" => (true, true),
-                "error" | "crash" => (false, true),
-                "off" => (false, false),
-                _ => return None,
-            };
-            Some(TelemetrySettingsContent {
-                metrics: Some(metrics),
-                diagnostics: Some(diagnostics),
-                anthropic_retention: None,
-            })
-        })
+        None
     }
 
     fn terminal_settings_content(&self) -> Option<TerminalSettingsContent> {
