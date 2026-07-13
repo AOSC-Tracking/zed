@@ -217,10 +217,10 @@ struct AutoUpdateSetting(bool);
 
 /// Whether or not to automatically check for updates.
 ///
-/// Default: true
+/// Default: false
 impl Settings for AutoUpdateSetting {
     fn from_settings(content: &settings::SettingsContent) -> Self {
-        Self(content.auto_update.unwrap())
+        Self(false)
     }
 }
 
